@@ -20,9 +20,9 @@ interface PostsProps {
   posts: Post[];
 }
 
-export default function Posts({ 
-  posts 
-}: PostsProps){
+export default function Posts({
+  posts
+}: PostsProps) {
   return (
     <>
       <Head>
@@ -32,8 +32,8 @@ export default function Posts({
       <main className={styles.container}>
         <div className={styles.posts}>
           {posts.map(post => (
-            <Link href={`/posts/preview/${post.slug}`}>
-              <a key={post.slug}>
+            <Link key={post.slug} href={`/posts/preview/${post.slug}`}>
+              <a>
                 <time>{post.updatedAt}</time>
                 <strong>{post.title}</strong>
                 {post.excerpt && (
@@ -50,7 +50,7 @@ export default function Posts({
   )
 }
 
-export const getStaticProps: GetStaticProps = async() => {
+export const getStaticProps: GetStaticProps = async () => {
   const prismic = getPrismicClient()
 
   const response = await prismic.query(

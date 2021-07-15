@@ -27,11 +27,11 @@ export default function PostPreview({
   post
 }: PostPreviewProps) {
   const [session] = useSession()
-  const { push } = useRouter()
+  const router = useRouter()
 
   useEffect(() => {
-    if(session?.activeSubscription){
-      push(`/posts/${post.slug}`)
+    if (session?.activeSubscription) {
+      router.push(`/posts/${post.slug}`)
       return;
     }
   }, [session])
@@ -66,7 +66,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   }
 }
 
-export const getStaticProps: GetStaticProps = async({
+export const getStaticProps: GetStaticProps = async ({
   params
 }) => {
   const { slug } = params
@@ -74,7 +74,7 @@ export const getStaticProps: GetStaticProps = async({
   const prismic = getPrismicClient()
 
   const response = await prismic.getByUID('post', String(slug), {})
-  
+
   const post = {
     slug,
     title: RichText.asText(response.data.title),
